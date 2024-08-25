@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background: linear-gradient(to right, #33a5f7, #c01afc);
+}
+
+dialog {
+  margin: 10% auto;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #117476, #530598);
+}
+
+@layer general-styling {
+  html {
+    font-family: system-ui, sans-serif;
+    color-scheme: dark light;
+    font-size: 2rem;
+  }
+
+  html:has(#light:checked) {
+    color-scheme: light;
+  }
+}
+
+/*--------------------------------------*/
+
+/* The final state */
+dialog {
+  display: none;
+  opacity: 0;
+  translate: 0 25vh;
+  transition-property: overlay, display, opacity, translate;
+  transition-duration: 1s;
+  transition-behavior: allow-discrete;
+}
+
+/* When open */
+dialog[open] {
+  display: block;
+  opacity: 1;
+  translate: 0 0;
+
+  /* The initial state*/
+  @starting-style {
+    opacity: 0;
+    translate: 0 -25vh;
+  }
+}
+
+dialog::backdrop {
+  opacity: 0;
+  background-image: linear-gradient(45deg, #f00, #00f);
+  transition-property: overlay, opacity, display;
+  transition-duration: 1s;
+  transition-behavior: allow-discrete;
+}
+
+dialog[open]::backdrop {
+  opacity: 0.75;
+}
+
+@starting-style {
+  dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
